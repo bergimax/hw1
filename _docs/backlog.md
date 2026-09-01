@@ -10,7 +10,7 @@ Status key: `[ ]` todo · `[~]` in progress · `[x]` done
 
 ## M1 — Auth & household setup
 
-- [ ] **T1 · Base template + static setup**
+- [x] **T1 · Base template + static setup**
   Add `templates/base.html`, configure `TEMPLATES` dirs and `STATIC_URL`,
   wire a placeholder home view + URL.
 - [ ] **T2 · Household & User models**
