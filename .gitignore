@@ -40,6 +40,8 @@ yarn-error.log*
 # Test / coverage
 coverage/
 .nyc_output/
+.ruff_cache/
+.pytest_cache/
 
 # Local database
 *.sqlite
