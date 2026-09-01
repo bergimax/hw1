@@ -23,6 +23,19 @@ every member has their own login; notifications are in-app only.
 - [`SCOPE.md`](SCOPE.md) — locked v1 scope, out-of-scope items, deferred decisions
 - [`_docs/plan.md`](_docs/plan.md) — build plan
 
+## Stack
+
+Django (Python). Project: `config`. App: `chores`.
+
+## Local setup
+
+```bash
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+.venv/bin/python manage.py migrate
+.venv/bin/python manage.py runserver
+```
+
 ## Status
 
-Planning. No tech stack chosen yet.
+Scaffolded. Django project and `chores` app created; models not yet written.
