@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
 import os
+import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -154,6 +155,11 @@ AUTH_USER_MODEL = "chores.User"
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "checklist"
 LOGOUT_REDIRECT_URL = "home"
+
+
+# Test-run tweaks: use a fast hasher so the auth-heavy suite stays quick.
+if "test" in sys.argv:
+    PASSWORD_HASHERS = ["django.contrib.auth.hashers.MD5PasswordHasher"]
 
 
 # Email
