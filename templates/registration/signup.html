@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Create a household{% endblock %}
+
+{% block content %}
+  <h1>Create a household</h1>
+  <p>You'll be the admin. You can add the rest of your household afterwards.</p>
+  <form method="post">
+    {% csrf_token %}
+    {% include "_form.html" %}
+    <button type="submit" class="button">Create household</button>
+  </form>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Archive chore{% endblock %}
+
+{% block content %}
+  <h1>Archive “{{ object.title }}”?</h1>
+  <p>It drops off the checklist. Its completion history stays in the activity log,
+     and you can recreate it later if you need it back.</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="button danger">Archive</button>
+    <a href="{% url 'chore_list' %}">Cancel</a>
+  </form>
+{% endblock %}

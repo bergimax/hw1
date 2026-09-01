@@ -3,7 +3,9 @@
   --bg: #ffffff;
   --muted: #6b6b6b;
   --accent: #2f6f4f;
+  --danger: #c0392b;
   --border: #e2e2e2;
+  --overdue-bg: #fdecea;
 }
 
 * { box-sizing: border-box; }
@@ -15,14 +17,17 @@ body {
   background: var(--bg);
 }
 
-.site-header,
-.site-footer {
-  padding: 1rem 1.25rem;
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  padding: 0.85rem 1.25rem;
   border-bottom: 1px solid var(--border);
 }
 
 .site-footer {
-  border-bottom: 0;
+  padding: 1rem 1.25rem;
   border-top: 1px solid var(--border);
   color: var(--muted);
 }
@@ -31,26 +36,128 @@ body {
   font-weight: 600;
   text-decoration: none;
   color: var(--accent);
+  margin-right: auto;
 }
 
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.site-nav a { color: var(--fg); text-decoration: none; }
+.site-nav a:hover { text-decoration: underline; }
+
 .site-main {
-  max-width: 46rem;
+  max-width: 48rem;
   margin: 0 auto;
   padding: 1.5rem 1.25rem;
 }
 
-.messages {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 1rem;
-}
+h1 { font-size: 1.5rem; }
 
+/* messages */
+.messages { list-style: none; padding: 0; margin: 0 0 1rem; }
 .message {
   padding: 0.5rem 0.75rem;
   border: 1px solid var(--border);
+  border-left-width: 4px;
   border-radius: 4px;
   margin-bottom: 0.5rem;
 }
+.message.error { border-left-color: var(--danger); }
+.message.success { border-left-color: var(--accent); }
 
-.message.error { border-color: #c0392b; }
-.message.success { border-color: var(--accent); }
+/* buttons */
+.button, .linkbutton {
+  font: inherit;
+  cursor: pointer;
+}
+.button {
+  display: inline-block;
+  padding: 0.4rem 0.9rem;
+  background: var(--accent);
+  color: #fff;
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  text-decoration: none;
+}
+.button.danger { background: var(--danger); border-color: var(--danger); }
+.linkbutton {
+  background: none;
+  border: none;
+  color: var(--accent);
+  padding: 0;
+  text-decoration: underline;
+}
+.inline-form { display: inline; margin: 0; }
+
+/* forms */
+.field { display: flex; flex-direction: column; gap: 0.25rem; margin-bottom: 0.9rem; }
+.field label { font-weight: 600; }
+.field input[type=text],
+.field input[type=email],
+.field input[type=password],
+.field input[type=number],
+.field textarea,
+.field select {
+  font: inherit;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  max-width: 28rem;
+}
+.field .help, .help { color: var(--muted); font-size: 0.9rem; }
+.field .error, .error { color: var(--danger); font-size: 0.9rem; }
+
+/* checklist */
+.chore-list { list-style: none; padding: 0; margin: 0; }
+.chore {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  margin-bottom: 0.6rem;
+}
+.chore.overdue { background: var(--overdue-bg); border-color: var(--danger); }
+.chore-meta { color: var(--muted); font-size: 0.9rem; }
+.chore-actions { display: flex; align-items: center; gap: 0.75rem; }
+.muted { color: var(--muted); }
+
+.badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  background: var(--danger);
+  color: #fff;
+  padding: 0.05rem 0.4rem;
+  border-radius: 3px;
+}
+
+/* tables */
+.table { width: 100%; border-collapse: collapse; }
+.table th, .table td {
+  text-align: left;
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+.table tr.inactive td { color: var(--muted); }
+
+/* activity */
+.activity { list-style: none; padding: 0; margin: 0; }
+.activity li { padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
+.activity li.undone { color: var(--muted); text-decoration: line-through; }
+.activity li.undone .badge { text-decoration: none; }
+
+.empty { color: var(--muted); }
+.pager { display: flex; gap: 1rem; align-items: center; margin-top: 1rem; }
+
+@media (max-width: 480px) {
+  .site-title { margin-right: 0; width: 100%; }
+  .chore { flex-direction: column; }
+}

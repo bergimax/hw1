@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Checklist{% endblock %}
+
+{% block content %}
+  <h1>Checklist</h1>
+
+  {% if not chores %}
+    <p class="empty">No chores yet.
+      {% if user.is_household_admin %}
+        <a href="{% url 'chore_create' %}">Add the first one</a>.
+      {% else %}
+        Ask your household admin to add some.
+      {% endif %}
+    </p>
+  {% else %}
+    <ul class="chore-list">
+      {% for chore in chores %}
+        <li class="chore {% if chore.next_due_on and chore.next_due_on < today %}overdue{% endif %}">
+          <div class="chore-main">
+            <strong>{{ chore.title }}</strong>
+            {% if chore.description %}<span class="muted"> — {{ chore.description }}</span>{% endif %}
+            <div class="chore-meta">
+              {% if chore.next_due_on %}
+                due {{ chore.next_due_on }}
+                {% if chore.next_due_on < today %}<span class="badge">overdue</span>{% endif %}
+              {% else %}
+                no due date
+              {% endif %}
+              &middot;
+              {% if chore.assignee %}{{ chore.assignee }}{% else %}<em>in pool</em>{% endif %}
+            </div>
+          </div>
+          <div class="chore-actions">
+            <form method="post" action="{% url 'chore_complete' chore.pk %}" class="inline-form">
+              {% csrf_token %}
+              <button type="submit" class="button">Done</button>
+            </form>
+            {% if chore.assignee_id is None %}
+              <form method="post" action="{% url 'chore_claim' chore.pk %}" class="inline-form">
+                {% csrf_token %}
+                <button type="submit" class="linkbutton">Claim</button>
+              </form>
+            {% elif chore.assignee_id == user.id or user.is_household_admin %}
+              <form method="post" action="{% url 'chore_release' chore.pk %}" class="inline-form">
+                {% csrf_token %}
+                <button type="submit" class="linkbutton">Release</button>
+              </form>
+            {% endif %}
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endblock %}

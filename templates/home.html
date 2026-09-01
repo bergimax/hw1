@@ -4,5 +4,10 @@
 
 {% block content %}
   <h1>Household Chores</h1>
-  <p>A shared checklist for household chores. The app is still being built.</p>
+  <p>A shared checklist for household chores &mdash; assign them, claim them from a
+     pool, and keep a history of who did what.</p>
+  <p>
+    <a class="button" href="{% url 'signup' %}">Create a household</a>
+    <a href="{% url 'login' %}">or log in</a>
+  </p>
 {% endblock %}

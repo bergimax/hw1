@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}{% if object %}Edit member{% else %}Add member{% endif %}{% endblock %}
+
+{% block content %}
+  <h1>{% if object %}Edit {{ object }}{% else %}Add member{% endif %}</h1>
+  <form method="post">
+    {% csrf_token %}
+    {% include "_form.html" %}
+    <p class="help">No email is sent. Share the initial password with the member
+       directly &mdash; they'll be asked to change it on first login.</p>
+    <button type="submit" class="button">Save</button>
+    <a href="{% url 'member_list' %}">Cancel</a>
+  </form>
+{% endblock %}

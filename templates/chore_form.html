@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}{% if object %}Edit chore{% else %}New chore{% endif %}{% endblock %}
+
+{% block content %}
+  <h1>{% if object %}Edit chore{% else %}New chore{% endif %}</h1>
+  <form method="post">
+    {% csrf_token %}
+    {% include "_form.html" %}
+    <p class="help">
+      Fixed: pick weekly + days, or monthly + day of month.
+      Interval: set days after completion.
+    </p>
+    <button type="submit" class="button">Save</button>
+    <a href="{% url 'chore_list' %}">Cancel</a>
+  </form>
+{% endblock %}

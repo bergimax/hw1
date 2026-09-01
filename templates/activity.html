@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Activity{% endblock %}
+
+{% block content %}
+  <h1>Activity</h1>
+
+  {% if not completions %}
+    <p class="empty">Nothing done yet.</p>
+  {% else %}
+    <ul class="activity">
+      {% for c in completions %}
+        <li class="{% if c.is_undone %}undone{% endif %}">
+          <span class="muted">{{ c.created_at|date:"M j, Y H:i" }}</span> —
+          <strong>{{ c.chore.title }}</strong>
+          done by {{ c.completed_by|default:"(removed user)" }}
+          on {{ c.completed_on }}
+          {% if c.is_undone %}
+            <span class="badge">undone by {{ c.undone_by|default:"admin" }}</span>
+          {% elif user.is_household_admin %}
+            <form method="post" action="{% url 'completion_undo' c.pk %}" class="inline-form">
+              {% csrf_token %}
+              <button type="submit" class="linkbutton">Undo</button>
+            </form>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+
+    {% if is_paginated %}
+      <p class="pager">
+        {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}">← newer</a>{% endif %}
+        <span>page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}">older →</a>{% endif %}
+      </p>
+    {% endif %}
+  {% endif %}
+{% endblock %}
